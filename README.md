@@ -1,6 +1,3 @@
 # Blakkout
 
-A Pen created on CodePen.
-
-Original URL: [https://codepen.io/Garbiboule-Leplusbo/pen/XJJGBOx](https://codepen.io/Garbiboule-Leplusbo/pen/XJJGBOx).
-
+Ce site est la vitrine du collectif marseillais Blakkout, et il est consultable sur blakkout.site .
