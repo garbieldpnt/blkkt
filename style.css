@@ -73,6 +73,12 @@ nav a {
   color: white;
 }
 
+.btn.disabled:hover {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #555; /* optionnel pour griser visuellement */
+}
+
 .about {
   padding: 4rem 2rem;
   background: #111;
@@ -127,25 +133,7 @@ footer {
   fill: white;
 }
 
-.hero-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 40px;
-  gap: 40px;
-}
 
-/* Garde ton ID existant */
-#hero-text {
-  flex: 1;
-  color: white;
-}
-
-/* Partie 3D à droite */
-.hero-3d {
-  flex-shrink: 0;
-  margin-top: 6rem;
-}
 
 /* Responsive mobile */
 @media (max-width: 43rem) {
@@ -179,4 +167,50 @@ footer {
 
 html {
   scroll-padding-top: 80px; /* ajuste selon la hauteur de ton header */
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem; /* espace entre le modèle et le texte */
+}
+
+.goodies-text {
+  text-align: right;
+  margin-right:3rem;
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px;
+  gap: 40px;
+}
+
+.text-block {
+  flex: 1;
+  color: white;
+  text-align:right;
+}
+
+.text-block h1{
+  font-size:4rem;
+  margin-bottom:-1rem;
+}
+.hero-3d {
+  flex-shrink: 0;
+  margin-top: 6rem;
+}
+
+@media (max-width: 43rem) {
+  .hero-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-3d {
+    margin-top: 20px;
+  }
 }
