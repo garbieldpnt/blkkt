@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blakkout — Drop T-shirt</title>
+    <link rel="icon" href=https://raw.githubusercontent.com/garbieldpnt/blkkt/main/Logo%20vecteur%20.svg">
+      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="t-style.css" />
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+
+  <main class="scroll-container">
+
+    <!-- SECTION 1 : Image plein écran + encart -->
+    <section class="hero">
+      <img src="https://raw.githubusercontent.com/garbieldpnt/blkkt/main/Landing.jpg" alt="Visuel d'intro" class="hero-bg" />
+      <div class="hero-text">
+        <p>Découvrez notre tshirt PHÉNOMÉNAL designé par <a href="https://www.instagram.com/rabit_lab?utm_source=ig_web_button_share_sheet&igsh=YmdzcTIzNXZ2bWIz">Rabit </a>, pour bien commencer la saison 2.
+        </p>
+      </div>
+    </section>
+
+    <section class="drop">
+      <div class="model-wrapper">
+        <model-viewer
+          src="https://raw.githubusercontent.com/garbieldpnt/blkkt/main/Tshirt_blanc.glb"
+          alt="T-shirt Blakkout"
+          auto-rotate
+          camera-controls
+          disable-zoom
+          style="width: 100%; height: 300px; background-color: transparent;">
+        </model-viewer>
+      </div>
+
+<a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfgsh2ZH6h4rAmmTkWZR1XKQ37Im7hhgA0nv_XHr1bOYxuRlA/viewform?usp=header">Précommander</a>
+      
+      <div class="model-wrapper">
+         <model-viewer
+          src="https://raw.githubusercontent.com/garbieldpnt/blkkt/main/Tshirt_noir.glb"
+          alt="T-shirt Blakkout"
+          auto-rotate
+          camera-controls
+          disable-zoom
+          style="width: 100%; height: 300px; background-color: transparent;">
+        </model-viewer>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
