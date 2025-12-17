@@ -1,216 +1,425 @@
+/* --- VARIABLES --- */
+:root {
+    --bg-color: #050505;
+    --text-color: #e0e0e0;
+    --accent-color: #FB0425;
+    --header-bg: rgba(5, 5, 5, 0.95);
+    --border-color: #333;
+}
+
+/* --- 1. RESET & BASE (MOBILE PAR DÉFAUT) --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-  margin: 0;
-  font-family: 'Orbitron', sans-serif;
-  background-color: #0c0c0c;
-  color: #f2f2f2;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Orbitron', sans-serif;
+    overflow-x: hidden;
+    font-size: 16px; /* Taille de base lisible */
 }
 
-a {
-  text-decoration: none;
-  color: #f2f2f2;
+/* Grille de fond */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px; /* Plus petit sur mobile */
+    z-index: -1;
+    pointer-events: none;
 }
 
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+img, video, svg { max-width: 100%; height: auto; }
+
+/* --- 2. INTRO ANIMATION --- */
+#intro-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-out, visibility 0.5s;
+}
+
+/* --- INTRO ANIMATION : GLITCH RAPIDE (1s) --- */
+.intro-logo svg {
+    width: 150px;
+    fill: white;
+    opacity: 0;
+    /* Durée passée à 0.8s */
+    animation: 
+        glitchAppear 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+        glitchShake 0.15s infinite linear alternate-reverse; /* Tremblement plus rapide */
+}
+
+@keyframes glitchAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+        filter: blur(10px) drop-shadow(5px 0 0 red) drop-shadow(-5px 0 0 cyan);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+        filter: blur(2px) drop-shadow(-5px 0 0 red) drop-shadow(5px 0 0 cyan);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0) drop-shadow(0 0 0 transparent);
+    }
+}
+
+@keyframes glitchShake {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
+}
+
+.intro-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* --- 3. HEADER & NAV (MOBILE) --- */
 header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #111; /* important : pour qu'on voie le header au-dessus du contenu */
-  z-index: 1000; /* pour qu'il reste au-dessus des autres éléments */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid #222;
+    position: fixed;
+    top: 0; width: 100%;
+    height: 70px;
+    background: var(--header-bg);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.logo svg { height: 40px; fill: white; }
+
+/* Le Menu Burger (Visible par défaut sur mobile) */
+.burger-menu {
+    display: block;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: white;
+    padding: 10px; /* Zone de touche plus large */
+}
+
+/* Le Menu de Navigation (Caché sur le côté) */
+nav#nav-header {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Caché à droite */
+    width: 85%; /* Prend presque tout l'écran */
+    height: 100vh;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+    border-left: 1px solid var(--accent-color);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+}
+
+nav#nav-header.active {
+    right: 0; /* Menu ouvert */
 }
 
 nav a {
-  margin-left: 2rem;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  margin-right: 3rem;
-  gap: 0.5rem;
+    font-size: 1.5rem; /* Gros texte pour le doigt */
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  text-align: center;
+nav a:hover { color: var(--accent-color); }
+
+/* --- 4. TYPOGRAPHIE & BOUTONS --- */
+h1 {
+    font-size: 2.5rem; /* Pas trop gros sur mobile */
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
 }
 
-.nav-link:hover {
-  color: #FB0425;
-}
-
-#hero-text h1 {
-  font-size: 4rem;
-  margin-bottom: -2rem;
-  margin-top: 6rem;
-}
-
-#hero-text h3 {
-  margin-bottom: 1rem;
-  font-size: 2rem;
-}
-
-#hero-text p {
-  margin-bottom: 3rem;
-  font-size: 1rem;
-}
-.btn {
-  background: #f2f2f2;
-  color: #0c0c0c;
-  padding: 0.8rem 1.5rem;
-  text-transform: uppercase;
-  font-weight: bold;
-  border: none;
-  border-radius: 3px;
-  transition: background 0.3s;
-}
-
-.btn:hover {
-  background: #FB0425;
-  color: white;
-}
-
-.btn.disabled:hover {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background-color: #555; /* optionnel pour griser visuellement */
-}
-
-.about {
-  padding: 4rem 2rem;
-  background: #111;
-  text-align: left;
-}
-
-.about h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-}
 h2 {
-  font-size: 2rem;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-.cta {
-  background: #1a1a1a;
-  padding: 3rem 2rem;
-  text-align: center;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-.cta h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+h3 { font-size: 1.2rem; color: #888; margin-bottom: 1rem; }
+
+p { line-height: 1.6; margin-bottom: 1.5rem; }
+
+.accent-text { color: var(--accent-color); }
+
+/* Bouton pleine largeur sur mobile pour ergonomie */
+.btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: white;
+    color: black;
+    padding: 15px 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    border: 2px solid white;
+    font-size: 1rem;
+    margin-top: 1rem;
 }
 
-.cta p {
-  margin-bottom: 2rem;
+.btn:active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
 }
 
-footer {
-  background: #000;
-  text-align: center;
-  padding: 2rem;
-  font-size: 0.9rem;
+/* --- 5. HERO SECTION (MOBILE FIRST) --- */
+section { padding: 3rem 1.5rem; } /* Padding adapté mobile */
+
+#music{
+  padding-top:90px;
 }
-
-.socials a {
-  margin: 0 1rem;
-  font-size: 0.9rem;
-  color: #888;
-}
-
-.socials a:hover {
-  color: #FB0425;
-}
-
-.logo svg {
-  display: block;
-  height: 80px;
-  fill: white;
-}
-
-
-
-/* Responsive mobile */
-@media (max-width: 43rem) {
-  .hero-container {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-   #nav-header {
-    display: none;
-  }
-
-  .hero-3d {
-    margin-top: 20px;
-  }
-}
-
-
-
-#gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4rem;
-  justify-content: center;
-}
-
-#gallery blockquote {
-  flex: 1 1 300px; /* largeur min 300px, s’adapte */
-  max-width: 200px;
-}
-
-html {
-  scroll-padding-top: 80px; /* ajuste selon la hauteur de ton header */
-}
-
-.flex-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem; /* espace entre le modèle et le texte */
-}
-
-.goodies-text {
-  text-align: right;
-  margin-right:3rem;
+#hoodie {
+    min-height: 100vh;
+    padding-top: 90px; /* Pour éviter que le header cache le contenu */
+    display: flex;
+    flex-direction: column; /* Empilement vertical */
+    justify-content: start;
+    text-align: left;
 }
 
 .hero-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 40px;
-  gap: 40px;
+    display: flex;
+    flex-direction: column; /* Texte en haut, modèle en bas */
+    width: 100%;
+    gap: 2rem;
 }
 
-.text-block {
-  flex: 1;
-  color: white;
-  text-align:right;
+#hero-text { order: 1; } /* Texte en premier */
+.hero-3d { 
+    order: 2; /* 3D en deuxième */
+    height: 400px; /* Hauteur fixe pour éviter les sauts */
+    width: 100%;
 }
 
-.text-block h1{
-  font-size:4rem;
-  margin-bottom:-1rem;
-}
-.hero-3d {
-  flex-shrink: 0;
-  margin-top: 6rem;
+model-viewer { width: 100%; height: 100%; }
+
+/* --- 6. ABOUT & EVENTS --- */
+.about { background: #0a0a0a; text-align: right; }
+
+#events { background: var(--card-bg); }
+
+#gallery {
+    display: flex;
+    flex-direction: column; /* Une colonne sur mobile */
+    align-items: center;
+    gap: 2rem;
 }
 
-@media (max-width: 43rem) {
-  .hero-container {
+.insta-placeholder {
+    width: 100%;
+    max-width: 350px; /* Largeur max d'un téléphone */
+    height: 400px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+}
+
+/* --- 7. FOOTER --- */
+footer {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    background: #000;
+    border-top: 1px solid #222;
+}
+
+.socials {
+    display: flex;
+    flex-direction: column; /* Liens empilés */
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.socials a { font-size: 1.2rem; letter-spacing: 2px; }
+
+/* =========================================
+   --- 8. VERSION DESKTOP (TABLETTE ET +) ---
+   ========================================= */
+@media (min-width: 1024px) {
+    
+    /* Ajustement Header */
+    header { padding: 0 3rem; height: 90px; }
+    .logo svg { height: 50px; }
+    
+    /* On cache le burger et on affiche les liens */
+    .burger-menu { display: none; }
+    
+    nav#nav-header {
+        position: static; /* Remis dans le flux */
+        width: auto;
+        height: auto;
+        background: transparent;
+        flex-direction: row;
+        border: none;
+        box-shadow: none;
+        transform: none;
+    }
+    
+    nav a { font-size: 0.9rem; margin-left: 2rem; }
+
+    /* Ajustement Hero */
+    #t-shirt { justify-content: center; }
+    
+    .hero-container {
+        flex-direction: row; /* Texte à gauche, 3D à droite */
+        align-items: center;
+        text-align: left;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    #hero-text { max-width: 50%; }
+    h1 { font-size: 4rem; }
+    
+    .btn { 
+        display: inline-block; /* Bouton normal */
+        width: auto; 
+        padding: 15px 40px; 
+    }
+
+    /* Ajustement Events */
+    #gallery {
+        flex-direction: row; /* Grille horizontale */
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Ajustement Footer */
+    .socials { flex-direction: row; justify-content: center; }
+}
+
+/* --- SECTION ARTISTES (Style Shotgun) --- */
+#artists {
+    text-align: center;
+    background-color: var(--bg-color); /* Fond noir par défaut */
+}
+
+.artist-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permet de passer à la ligne sur mobile */
+    gap: 40px;       /* Espace entre les artistes */
+    margin-top: 30px;
+}
+
+.artist-card {
+    display: flex;
     flex-direction: column;
     align-items: center;
-  }
+    width: 160px; /* Largeur d'une carte */
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
 
-  .hero-3d {
-    margin-top: 20px;
-  }
+.artist-card:hover {
+    transform: translateY(-5px); /* Petit saut au survol */
+}
+
+/* Le rond de la photo */
+.artist-img-wrapper {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* C'est ça qui fait le rond parfait */
+    overflow: hidden;
+    margin-bottom: 15px;
+    border: 3px solid transparent; /* Bordure invisible par défaut */
+    transition: border-color 0.3s ease;
+}
+
+.artist-card:hover .artist-img-wrapper {
+    border-color: var(--accent-color); /* Bordure rouge/orange au survol */
+}
+
+.artist-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* L'image remplit le rond sans être déformée */
+}
+
+/* Le nom de l'artiste */
+.artist-name {
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+}
+
+/* L'icône de vérification (Badge rouge) */
+.verified-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 18px;
+    background-color: var(--accent-color); /* Ton rouge Blakkout */
+    border-radius: 50%;
+  flex-shrink: 0;  /* Empêche l'icône de s'écraser */
+    
+    margin-left: 5px; /* Pour garder un petit espace avec le texte */
+}
+
+.verified-icon svg {
+    width: 12px;
+    height: 12px;
+    fill: white; /* Le "check" en blanc */
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .artist-grid {
+        gap: 20px;
+    }
+    .artist-card {
+        width: 140px; /* Un peu plus petit sur mobile */
+    }
+    .artist-img-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+#music {
+    background: #080808;
+    text-align: center;
+}
+
+.soundcloud-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #333;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
